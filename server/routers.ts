@@ -1,7 +1,9 @@
+import { z } from "zod";
 import { COOKIE_NAME } from "../shared/const.js";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import * as db from "./db";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -17,12 +19,122 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  // Perfis de Alumínio
+  perfis: router({
+    list: publicProcedure.query(() => db.getPerfis()),
+
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(({ input }) => db.getPerfilById(input.id)),
+
+    search: publicProcedure
+      .input(z.object({ query: z.string() }))
+      .query(({ input }) => db.searchPerfis(input.query)),
+
+    create: publicProcedure
+      .input(
+        z.object({
+          codigoPerfil: z.string().min(1).max(50),
+          nomePerfil: z.string().min(1).max(100),
+          linha: z.string().max(50).optional(),
+          alturaMm: z.string().optional(),
+          larguraMm: z.string().optional(),
+          espessuraMm: z.string().optional(),
+          imagemSecao: z.string().optional(),
+          observacoes: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => db.createPerfil(input)),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          codigoPerfil: z.string().min(1).max(50).optional(),
+          nomePerfil: z.string().min(1).max(100).optional(),
+          linha: z.string().max(50).optional(),
+          alturaMm: z.string().optional(),
+          larguraMm: z.string().optional(),
+          espessuraMm: z.string().optional(),
+          imagemSecao: z.string().optional(),
+          observacoes: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => {
+        const { id, ...data } = input;
+        return db.updatePerfil(id, data);
+      }),
+
+    delete: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(({ input }) => db.deletePerfil(input.id)),
+  }),
+
+  // Localizações no Estoque
+  localizacoes: router({
+    getByPerfilId: publicProcedure
+      .input(z.object({ perfilId: z.number() }))
+      .query(({ input }) => db.getLocalizacaoByPerfilId(input.perfilId)),
+
+    create: publicProcedure
+      .input(
+        z.object({
+          perfilId: z.number(),
+          setor: z.string().min(1).max(10),
+          prateleira: z.number().int().min(1),
+          gaveta: z.number().int().min(1),
+          observacoes: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => db.createLocalizacao(input)),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          setor: z.string().min(1).max(10).optional(),
+          prateleira: z.number().int().min(1).optional(),
+          gaveta: z.number().int().min(1).optional(),
+          observacoes: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => {
+        const { id, ...data } = input;
+        return db.updateLocalizacao(id, data);
+      }),
+  }),
+
+  // Catálogo Técnico
+  catalogoTecnico: router({
+    getByPerfilId: publicProcedure
+      .input(z.object({ perfilId: z.number() }))
+      .query(({ input }) => db.getCatalogoTecnicoByPerfilId(input.perfilId)),
+
+    create: publicProcedure
+      .input(
+        z.object({
+          perfilId: z.number(),
+          pdfOrigem: z.string().optional(),
+          medidasCompletas: z.string().optional(),
+          desenhoTecnico: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => db.createCatalogoTecnico(input)),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          pdfOrigem: z.string().optional(),
+          medidasCompletas: z.string().optional(),
+          desenhoTecnico: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => {
+        const { id, ...data } = input;
+        return db.updateCatalogoTecnico(id, data);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
