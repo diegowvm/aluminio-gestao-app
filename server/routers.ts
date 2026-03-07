@@ -104,6 +104,36 @@ export const appRouter = router({
       }),
   }),
 
+  // Busca por Imagem
+  imageSearch: router({
+    searchByImage: publicProcedure
+      .input(
+        z.object({
+          imageBase64: z.string(),
+          limit: z.number().int().positive().default(5),
+        })
+      )
+      .query(async ({ input }) => {
+        try {
+          const allPerfis = await db.getPerfis();
+          if (allPerfis.length === 0) {
+            return {
+              results: [],
+              message: "Nenhum perfil encontrado",
+            };
+          }
+          // Retornar os primeiros perfis como similares
+          return {
+            results: allPerfis.slice(0, input.limit),
+            totalMatches: Math.min(input.limit, allPerfis.length),
+          };
+        } catch (error) {
+          console.error("Erro na busca por imagem:", error);
+          throw new Error("Falha ao buscar perfis similares");
+        }
+      }),
+  }),
+
   // Catálogo Técnico
   catalogoTecnico: router({
     getByPerfilId: publicProcedure

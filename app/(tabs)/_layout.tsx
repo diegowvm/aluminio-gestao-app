@@ -52,8 +52,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: "Busca",
+          title: "Buscar",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="camera"
+        options={{
+          title: "Câmera",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="camera.fill" color={color} />,
         }}
       />
     </Tabs>

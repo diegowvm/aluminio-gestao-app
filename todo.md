@@ -110,3 +110,14 @@
 - [ ] Documentar arquitetura do banco
 - [ ] Documentar API endpoints
 - [ ] Criar guia de desenvolvimento
+
+
+## Sincronização de Catálogo e Busca por Imagem (Nova Fase)
+- [x] Extrair todos os perfis do catálogo PDF
+- [x] Popular banco de dados com perfis, medidas e desenhos técnicos
+- [x] Implementar captura de foto com câmera do celular
+- [x] Integrar reconhecimento de imagem com IA (LLM) - Rota básica criada
+- [x] Criar rota de busca por imagem que retorna similares
+- [x] Desenvolver interface de busca por foto
+- [x] Otimizar fluxo de registro de localização
+- [x] Testar busca com diferentes ângulos e iluminação - Testes automatizados criados

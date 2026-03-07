@@ -1,0 +1,152 @@
+[
+  {
+    "codigo": "CG-300",
+    "nome": "Corrimão",
+    "categoria": "SACADAS",
+    "linha": "Novo modelo",
+    "largura_mm": "111",
+    "altura_mm": "82.7",
+    "espessura_mm": "15.6",
+    "observacoes": "Perfil de corrimão para sacadas"
+  },
+  {
+    "codigo": "CG-833",
+    "nome": "Coluna",
+    "categoria": "SACADAS",
+    "linha": "Novo modelo",
+    "largura_mm": "85",
+    "altura_mm": "40",
+    "espessura_mm": null,
+    "observacoes": "Perfil de coluna para sacadas"
+  },
+  {
+    "codigo": "CG-834",
+    "nome": "Chumbador",
+    "categoria": "SACADAS",
+    "linha": "Novo modelo",
+    "largura_mm": "75",
+    "altura_mm": "38.5",
+    "espessura_mm": "15",
+    "observacoes": "Perfil chumbador para sacadas"
+  },
+  {
+    "codigo": "PD-005",
+    "nome": "Marco da folha",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": "100.30",
+    "altura_mm": null,
+    "espessura_mm": null,
+    "observacoes": "Marco para portas deslizantes"
+  },
+  {
+    "codigo": "PD-001",
+    "nome": "Trilho Superior",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": "20.07",
+    "altura_mm": "23.23",
+    "espessura_mm": null,
+    "observacoes": "Trilho superior para portas"
+  },
+  {
+    "codigo": "PU-004",
+    "nome": "Batente",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": "15.87",
+    "altura_mm": "15.87",
+    "espessura_mm": "1.58",
+    "observacoes": "Batente para portas deslizantes"
+  },
+  {
+    "codigo": "PD-006",
+    "nome": "Transpasse",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": null,
+    "altura_mm": "25",
+    "espessura_mm": null,
+    "observacoes": "Transpasse para portas"
+  },
+  {
+    "codigo": "PD-009",
+    "nome": "Transpasse",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": null,
+    "altura_mm": "25",
+    "espessura_mm": null,
+    "observacoes": "Transpasse duplo para portas"
+  },
+  {
+    "codigo": "PD-004",
+    "nome": "Trilho inferior",
+    "categoria": "PORTAS DESLIZANTES",
+    "linha": "Padrão",
+    "largura_mm": "20.00",
+    "altura_mm": "15",
+    "espessura_mm": null,
+    "observacoes": "Trilho inferior para portas"
+  },
+  {
+    "codigo": "SA-004",
+    "nome": "Marco/Batente",
+    "categoria": "MARCO E VISTAS",
+    "linha": "Padrão",
+    "largura_mm": "105",
+    "altura_mm": "17.5",
+    "espessura_mm": "10.5",
+    "observacoes": "Marco com batente integrado"
+  },
+  {
+    "codigo": "SA-005",
+    "nome": "Vista interna",
+    "categoria": "MARCO E VISTAS",
+    "linha": "Padrão",
+    "largura_mm": "32",
+    "altura_mm": "52",
+    "espessura_mm": "8",
+    "observacoes": "Vista interna para portas e janelas"
+  },
+  {
+    "codigo": "SA-006",
+    "nome": "Vista externa",
+    "categoria": "MARCO E VISTAS",
+    "linha": "Padrão",
+    "largura_mm": "62",
+    "altura_mm": "52",
+    "espessura_mm": "8",
+    "observacoes": "Vista externa para portas e janelas"
+  },
+  {
+    "codigo": "LB-061",
+    "nome": "Lambri Duplo",
+    "categoria": "PORTAS LINHA 25",
+    "linha": "Linha 25",
+    "largura_mm": "108",
+    "altura_mm": "10",
+    "espessura_mm": null,
+    "observacoes": "Lambri duplo para portas linha 25"
+  },
+  {
+    "codigo": "SU-350",
+    "nome": "Montante",
+    "categoria": "PORTAS LINHA 25",
+    "linha": "Linha 25",
+    "largura_mm": "80",
+    "altura_mm": "25",
+    "espessura_mm": "11",
+    "observacoes": "Montante para portas linha 25"
+  },
+  {
+    "codigo": "25-540",
+    "nome": "Marco da folha",
+    "categoria": "PORTAS LINHA 25",
+    "linha": "Linha 25",
+    "largura_mm": null,
+    "altura_mm": "30.35",
+    "espessura_mm": "8.5",
+    "observacoes": "Marco da folha para linha 25"
+  }
+]
