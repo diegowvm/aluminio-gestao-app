@@ -121,3 +121,37 @@
 - [x] Desenvolver interface de busca por foto
 - [x] Otimizar fluxo de registro de localização
 - [x] Testar busca com diferentes ângulos e iluminação - Testes automatizados criados
+
+
+## Fase 2: Reconhecimento Visual Avançado com IA
+
+### Extração Completa do PDF
+- [x] Extrair todas as páginas do PDF como imagens de alta qualidade
+- [x] Extrair texto OCR de cada página para obter especificações técnicas
+- [x] Identificar e segmentar desenhos técnicos dos perfis
+- [x] Extrair tabelas de medidas e especificações
+- [x] Criar dataset estruturado com imagens + metadados
+
+### Processamento de Imagens e Embeddings
+- [x] Implementar pipeline de processamento de imagens (normalização, redimensionamento)
+- [x] Gerar embeddings visuais usando IA (representação numérica das imagens)
+- [x] Armazenar embeddings no banco de dados para busca rápida
+- [x] Criar índices para busca por similaridade (vector search)
+
+### API de Busca por Similaridade Visual
+- [x] Criar rota tRPC para upload/análise de imagem
+- [x] Implementar comparação de embeddings visuais
+- [x] Retornar top 5 perfis mais similares com score de confiança
+- [x] Validar medidas automaticamente para confirmar modelo
+
+### Interface Avançada
+- [x] Melhorar tela de câmera com preview em tempo real
+- [x] Exibir score de confiança de cada resultado
+- [x] Mostrar comparação visual lado-a-lado
+- [x] Permitir ajuste manual se resultado não for 100% preciso
+
+### Testes e Otimização
+- [x] Testar com diferentes ângulos de câmera
+- [x] Testar com diferentes iluminações
+- [x] Validar precisão do reconhecimento (meta: 95%+)
+- [x] Otimizar performance de busca

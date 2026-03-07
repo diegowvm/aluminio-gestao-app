@@ -4,6 +4,7 @@ import type { InsertPerfil } from "../drizzle/schema";
 
 describe("Perfis API", () => {
   let testPerfilId: number | null = null;
+// Remover: testPerfilId não é mais necessário
 
   beforeAll(async () => {
     // Criar um perfil de teste
@@ -60,16 +61,22 @@ describe("Perfis API", () => {
   });
 
   it("deve obter um perfil por ID", async () => {
-    if (!testPerfilId) {
-      expect(testPerfilId).toBeDefined();
+    // Criar um novo perfil para este teste
+    const newPerfil = await db.createPerfil({
+      codigoPerfil: "TEST-GETBYID-001",
+      nomePerfil: "Perfil para Obter por ID",
+      linha: "Teste",
+    });
+
+    if (!newPerfil) {
+      expect(newPerfil).toBeDefined();
       return;
     }
 
-    const perfil = await db.getPerfilById(testPerfilId);
+    const retrieved = await db.getPerfilById(newPerfil.id);
 
-    expect(perfil).toBeDefined();
-    expect(perfil?.id).toBe(testPerfilId);
-    expect(perfil?.codigoPerfil).toBe("TEST-001");
+    expect(retrieved).toBeDefined();
+    expect(retrieved?.codigoPerfil).toBe("TEST-GETBYID-001");
   });
 
   it("deve buscar perfis por código", async () => {

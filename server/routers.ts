@@ -4,6 +4,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import * as db from "./db";
+import { aiVisionRouter } from "./routers/ai-vision";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -165,6 +166,20 @@ export const appRouter = router({
         return db.updateCatalogoTecnico(id, data);
       }),
   }),
+
+  // IA Vision - Reconhecimento visual avançado
+  aiVision: aiVisionRouter,
 });
 
 export type AppRouter = typeof appRouter;
+
+/**
+ * Função auxiliar para obter localização de um perfil
+ */
+export async function getLocalizacaoByPerfilId(perfilId: number) {
+  try {
+    return await db.getLocalizacaoByPerfilId(perfilId);
+  } catch {
+    return null;
+  }
+}

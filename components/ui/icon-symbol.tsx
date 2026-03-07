@@ -27,6 +27,7 @@ const MAPPING = {
   "checkmark": "check",
   "exclamationmark.circle": "error",
   "camera.fill": "camera-alt",
+  "sparkles": "auto-awesome",
 } as IconMapping;
 
 /**
