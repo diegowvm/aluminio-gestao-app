@@ -61,9 +61,10 @@ describe("Perfis API", () => {
   });
 
   it("deve obter um perfil por ID", async () => {
-    // Criar um novo perfil para este teste
+    // Criar um novo perfil para este teste com código único
+    const uniqueCode = `TEST-GETBYID-${Date.now()}`;
     const newPerfil = await db.createPerfil({
-      codigoPerfil: "TEST-GETBYID-001",
+      codigoPerfil: uniqueCode,
       nomePerfil: "Perfil para Obter por ID",
       linha: "Teste",
     });
@@ -76,7 +77,7 @@ describe("Perfis API", () => {
     const retrieved = await db.getPerfilById(newPerfil.id);
 
     expect(retrieved).toBeDefined();
-    expect(retrieved?.codigoPerfil).toBe("TEST-GETBYID-001");
+    expect(retrieved?.codigoPerfil).toBe(uniqueCode);
   });
 
   it("deve buscar perfis por código", async () => {
