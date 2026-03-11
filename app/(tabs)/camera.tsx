@@ -1,11 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ScrollView, Text, View, Pressable, ActivityIndicator, FlatList, Modal, Image, Alert } from "react-native";
+
 import { ScreenContainer } from "@/components/screen-container";
 import { ProfileCard } from "@/components/profile-card";
 import { LocationBadge } from "@/components/location-badge";
 import { trpc } from "@/lib/trpc";
 import { useColors } from "@/hooks/use-colors";
 import * as ImagePicker from "expo-image-picker";
+import { visionRecognitionService } from "@/lib/vision-recognition-service";
 
 // Tipos para resultados de busca
 interface SearchResult {
@@ -24,6 +26,17 @@ interface SearchResult {
 
 export default function CameraScreen() {
   const colors = useColors();
+  const [modelReady, setModelReady] = useState(false);
+
+  // Inicializar modelo ao montar componente
+  useEffect(() => {
+    const initModel = async () => {
+      const initialized = await visionRecognitionService.initialize();
+      setModelReady(initialized);
+      console.log("[Camera] Modelo TeachableMachine:", initialized ? "✓ Pronto" : "✗ Erro");
+    };
+    initModel();
+  }, []);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedPerfil, setSelectedPerfil] = useState<any>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -77,19 +90,61 @@ export default function CameraScreen() {
   const searchByImage = async (imageUri: string) => {
     setIsSearching(true);
     try {
-      // Simular busca por imagem
-      // Em produção, você converteria a imagem para base64 e enviaria para a API
-      if (allPerfis && allPerfis.length > 0) {
-        // Retornar os primeiros 5 perfis como similares
-        setSearchResults(allPerfis.slice(0, 5).map(p => ({
-          ...p,
-          criadoEm: p.criadoEm instanceof Date ? p.criadoEm.toISOString() : p.criadoEm
-        })));
-      } else {
-        Alert.alert("Nenhum resultado", "Nenhum perfil similar encontrado");
+      console.log("[Camera] Iniciando reconhecimento visual...");
+      
+      // Usar serviço de reconhecimento visual com modelo TeachableMachine
+      const result = await visionRecognitionService.recognizeImage(imageUri);
+      
+      if (!result) {
+        Alert.alert("Erro", "Falha ao analisar imagem");
         setSearchResults([]);
+        return;
+      }
+
+      console.log(`[Camera] Reconhecimento: ${result.topPrediction.className} (${result.confidence}%)`);
+      
+      // Buscar perfil pelo código reconhecido
+      const recognizedCode = result.topPrediction.className;
+      const matchedProfile = allPerfis?.find(
+        p => p.codigoPerfil?.toUpperCase() === recognizedCode.toUpperCase()
+      );
+
+      if (matchedProfile && result.matched) {
+        // Se encontrou match com confiança alta
+        setSearchResults([{
+          ...matchedProfile,
+          criadoEm: matchedProfile.criadoEm instanceof Date 
+            ? matchedProfile.criadoEm.toISOString() 
+            : matchedProfile.criadoEm
+        }]);
+        
+        Alert.alert(
+          "✓ Identificado!",
+          `${matchedProfile.codigoPerfil} - ${matchedProfile.nomePerfil}\nConfiança: ${result.confidence}%`
+        );
+      } else {
+        // Se confiança baixa ou não encontrou, retornar top 5 similares
+        const topSimilar = result.allPredictions.slice(0, 5).map(pred => 
+          allPerfis?.find(p => p.codigoPerfil?.toUpperCase() === pred.className.toUpperCase())
+        ).filter(Boolean) as SearchResult[];
+
+        if (topSimilar.length > 0) {
+          setSearchResults(topSimilar.map(p => ({
+            ...p,
+            criadoEm: p.criadoEm instanceof Date ? p.criadoEm.toISOString() : p.criadoEm
+          })));
+          
+          Alert.alert(
+            "⚠ Confiança Baixa",
+            `Melhor match: ${result.topPrediction.className} (${result.confidence}%)\nMostrando perfis similares...`
+          );
+        } else {
+          Alert.alert("Nenhum resultado", "Nenhum perfil similar encontrado");
+          setSearchResults([]);
+        }
       }
     } catch (error) {
+      console.error("[Camera] Erro:", error);
       Alert.alert("Erro", "Falha ao buscar perfis similares");
     } finally {
       setIsSearching(false);
@@ -124,28 +179,63 @@ export default function CameraScreen() {
             </View>
           )}
 
+          {/* Status do Modelo */}
+          {!modelReady && (
+            <View className="bg-warning/10 border border-warning rounded-lg p-3">
+              <Text className="text-warning text-sm font-semibold">⚠ Carregando modelo de IA...</Text>
+            </View>
+          )}
+          {modelReady && (
+            <View className="bg-success/10 border border-success rounded-lg p-3">
+              <Text className="text-success text-sm font-semibold">✓ Modelo de IA pronto</Text>
+              <Text className="text-success text-xs mt-1">
+                Classes: {visionRecognitionService.getLabels().join(", ")}
+              </Text>
+            </View>
+          )}
+
           {/* Botões de Ação */}
           <View className="gap-2">
             <Pressable
               onPress={takePhoto}
+              disabled={!modelReady || isSearching}
               style={({ pressed }) => ({
-                opacity: pressed ? 0.7 : 1,
+                opacity: pressed && modelReady && !isSearching ? 0.7 : 1,
               })}
-              className="bg-primary rounded-lg p-4 items-center flex-row justify-center gap-2"
+              className={`rounded-lg p-4 items-center flex-row justify-center gap-2 ${
+                modelReady && !isSearching ? "bg-primary" : "bg-primary/50"
+              }`}
             >
-              <Text className="text-2xl">📷</Text>
-              <Text className="text-white font-semibold">Tirar Foto</Text>
+              {isSearching ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <>
+                  <Text className="text-2xl">📷</Text>
+                  <Text className="text-white font-semibold">Tirar Foto</Text>
+                </>
+              )}
             </Pressable>
 
             <Pressable
               onPress={pickImage}
+              disabled={!modelReady || isSearching}
               style={({ pressed }) => ({
-                opacity: pressed ? 0.7 : 1,
+                opacity: pressed && modelReady && !isSearching ? 0.7 : 1,
               })}
-              className="bg-surface border border-border rounded-lg p-4 items-center flex-row justify-center gap-2"
+              className={`border rounded-lg p-4 items-center flex-row justify-center gap-2 ${
+                modelReady && !isSearching
+                  ? "bg-surface border-border"
+                  : "bg-surface/50 border-border/50"
+              }`}
             >
-              <Text className="text-2xl">🖼️</Text>
-              <Text className="text-foreground font-semibold">Galeria</Text>
+              {isSearching ? (
+                <ActivityIndicator color={colors.foreground} />
+              ) : (
+                <>
+                  <Text className="text-2xl">🖼️</Text>
+                  <Text className="text-foreground font-semibold">Galeria</Text>
+                </>
+              )}
             </Pressable>
           </View>
 

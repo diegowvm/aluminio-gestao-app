@@ -79,9 +79,20 @@
 - [x] Validar localização no estoque
 - [x] 33 testes automatizados passando (100%)
 
+## Integração TeachableMachine (Nova Fase)
+- [x] Copiar modelo treinado (model.json, weights.bin, metadata.json)
+- [x] Criar serviço de reconhecimento visual (vision-recognition-service.ts)
+- [x] Integrar na tela de câmera com inicialização automática
+- [x] Adicionar status visual do modelo (pronto/carregando)
+- [x] Implementar busca por classe reconhecida
+- [x] Criar 8 testes do TeachableMachine
+- [x] Validar 10 classes treinadas (AL-225, CG-300, 25-540, CG-833, CG-834, SA-005, SL-003, VZ-080VT, SA-004, SA-006)
+
 ## Status Final
 - Dashboard: ✅ Mostra 303 perfis reais
 - Banco de dados: ✅ 303 perfis sincronizados
 - API: ✅ Todas as rotas funcionando
-- Testes: ✅ 33/33 passando
-- IA Vision: ✅ Pronta para reconhecimento
+- Testes: ✅ 41/41 passando (100%)
+- IA Vision: ✅ TeachableMachine integrado e funcional
+- Modelo Treinado: ✅ 10 classes de perfis reais
+- Câmera: ✅ Reconhecimento visual em tempo real
