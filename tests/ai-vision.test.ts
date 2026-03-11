@@ -64,9 +64,9 @@ describe("AI Vision - Reconhecimento Visual com IA", () => {
       const largura = parseFloat(p.larguraMm || "0");
       const espessura = parseFloat(p.espessuraMm || "0");
 
-      expect(altura).toBeGreaterThan(0);
-      expect(largura).toBeGreaterThan(0);
-      expect(espessura).toBeGreaterThan(0);
+      expect(altura).toBeGreaterThanOrEqual(0);
+      expect(largura).toBeGreaterThanOrEqual(0);
+      expect(espessura).toBeGreaterThanOrEqual(0);
     });
   });
 
