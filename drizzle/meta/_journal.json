@@ -15,6 +15,13 @@
       "when": 1772809481124,
       "tag": "0001_whole_impossible_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1773524972758,
+      "tag": "0002_hot_doorman",
+      "breakpoints": true
     }
   ]
 }

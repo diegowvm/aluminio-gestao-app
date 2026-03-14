@@ -6,6 +6,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import * as db from "./db";
 import { aiVisionRouter } from "./routers/ai-vision";
 import { visionRecognitionRouter } from "./routers/vision-recognition";
+import { trainingRouter } from "./routers/training";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -173,6 +174,9 @@ export const appRouter = router({
 
   // Vision Recognition - Reconhecimento visual profundo com busca exata
   visionRecognition: visionRecognitionRouter,
+
+  // Training - Treinamento contínuo e feedback do modelo
+  training: trainingRouter,
 });
 
 export type AppRouter = typeof appRouter;
