@@ -1,253 +1,59 @@
-# Projeto TODO - Gestão de Perfis de Alumínio
+# TODO - Aplicativo de Reconhecimento de Perfis de Alumínio (PRODUÇÃO)
 
-## Arquitetura e Design
-- [x] Criar design.md com arquitetura de telas
-- [x] Definir fluxos de usuário
-- [x] Definir paleta de cores
-- [x] Gerar logo do aplicativo
+## FASE 1: AUDITORIA E LIMPEZA
 
-## Backend - Banco de Dados
-- [x] Criar schema PERFIS
-- [x] Criar schema LOCALIZACOES
-- [x] Criar schema CATALOGO_TECNICO
-- [x] Criar relacionamentos entre tabelas
-- [x] Criar índices para otimizar buscas
-- [x] Executar migrations do banco
+### Funcionalidades a REMOVER (não funcionam ou confundem)
+- [x] Remover tela "Treinar" (train.tsx)
+- [x] Remover tela "Performance" (performance.tsx)
+- [x] Remover tela "IA Analysis" (ai-analysis.tsx)
+- [x] Remover tela "Câmera" (camera.tsx) - será reconstruída
+- [x] Remover tela "Busca" (search.tsx)
+- [x] Remover tela "Localização" (location.tsx)
+- [x] Remover tela "Cadastro" (register.tsx)
+- [ ] Remover routers desnecessários (training.ts, performance.ts, ai-vision.ts)
+- [ ] Remover tabelas do banco não essenciais
+- [ ] Limpar banco de dados de dados fictícios
 
-## Backend - API tRPC
-- [x] Criar rotas para CRUD de PERFIS
-- [x] Criar rotas para CRUD de LOCALIZACOES
-- [x] Validação com Zod para todos os inputs
+### Funcionalidades a MANTER (funcionam)
+- [x] Dashboard (index.tsx) - apenas estatísticas básicas
+- [x] Banco de dados de perfis (PERFIS table)
+- [x] API básica de perfis (CRUD)
 
-## Frontend - Componentes Base
-- [x] Criar componente StatCard
-- [x] Criar componente ProfileCard
-- [x] Criar componente LocationBadge
-- [x] Criar componente FormInput
+## FASE 2: IMPLEMENTAR FUNCIONALIDADES REAIS
 
-## Frontend - Telas
-- [x] Dashboard (Home) - 303 perfis reais exibidos
-- [x] Cadastro de Perfil
-- [x] Localização no Estoque
-- [x] Busca e Visualização
-- [x] Tela de Câmera com IA
+### Upload de PDF para IA
+- [ ] Criar componente de upload de PDF
+- [ ] Enviar PDF para servidor
+- [ ] Extrair informações do PDF (303 perfis)
+- [ ] Armazenar em memória da IA
 
-## Frontend - Navegação
-- [x] Configurar Tab Bar com 5 abas
-- [x] Implementar navegação entre telas
-- [x] Adicionar ícones nas abas
+### Câmera/Upload de Foto
+- [x] Implementar captura de câmera
+- [x] Implementar upload de foto da galeria
+- [x] Enviar foto para IA
 
-## Frontend - Integração com Backend
-- [x] Conectar Dashboard à API
-- [x] Conectar Cadastro à API
-- [x] Conectar Localização à API
-- [x] Conectar Busca à API
-- [x] Implementar tratamento de erros
-- [x] Implementar loading states
+### Reconhecimento Real
+- [x] IA analisa foto (rota visionRecognition.analyzeAndSearch)
+- [x] IA compara com catálogo aprendido (303 perfis no banco)
+- [x] IA retorna modelo identificado com confiança (corrigido formato de resposta)
+- [x] Exibir resultado na tela (modal com resultado)
 
-## Branding
-- [x] Gerar logo do aplicativo
-- [x] Atualizar app.config.ts
-- [x] Criar assets
+### Dashboard Simples
+- [ ] Total de perfis no catálogo
+- [ ] Última busca realizada
+- [ ] Acurácia geral (%)
 
-## CORREÇÃO CONCLUÍDA - Dados Reais do Catálogo
+## FASE 3: TESTES E VALIDAÇÃO
 
-### Extração Completa do PDF (109 páginas)
-- [x] Analisar estrutura exata do PDF ESCRIVÁ-CATÁLOGO
-- [x] Extrair TODOS os 303 perfis reais
-- [x] Recortar imagens dos desenhos técnicos (109 imagens)
-- [x] Extrair código, nome, linha, medidas
-- [x] Criar dataset estruturado (profiles.json)
+- [ ] Testar upload de PDF
+- [ ] Testar captura de câmera
+- [ ] Testar upload de foto
+- [ ] Testar reconhecimento com múltiplos ângulos
+- [ ] Validar que IA aprende com o PDF
+- [ ] Testar em ambiente industrial
 
-### Limpeza e Sincronização
-- [x] Remover dados de teste do banco
-- [x] Limpar tabela de perfis completamente
-- [x] Popular com 303 perfis reais ESCRIVÁ
-- [x] Associar imagens aos perfis
-- [x] Validar integridade dos dados (100% sucesso)
+## FASE 4: ENTREGA
 
-### Reconhecimento Visual com IA
-- [x] Gerar embeddings visuais dos 303 desenhos
-- [x] Treinar reconhecimento com dados verdadeiros
-- [x] Testar busca por imagem com perfis reais
-- [x] Validar precisão do reconhecimento
-
-### Testes Funcionais
-- [x] Testar captura de foto com perfis reais
-- [x] Testar busca por código/nome (AD-205, AL-005, VZ-080, etc)
-- [x] Testar busca por similaridade visual
-- [x] Validar localização no estoque
-- [x] 33 testes automatizados passando (100%)
-
-## Integração TeachableMachine (Nova Fase)
-- [x] Copiar modelo treinado (model.json, weights.bin, metadata.json)
-- [x] Criar serviço de reconhecimento visual (vision-recognition-service.ts)
-- [x] Integrar na tela de câmera com inicialização automática
-- [x] Adicionar status visual do modelo (pronto/carregando)
-- [x] Implementar busca por classe reconhecida
-- [x] Criar 8 testes do TeachableMachine
-- [x] Validar 10 classes treinadas (AL-225, CG-300, 25-540, CG-833, CG-834, SA-005, SL-003, VZ-080VT, SA-004, SA-006)
-
-## Status Final
-- Dashboard: ✅ Mostra 303 perfis reais
-- Banco de dados: ✅ 303 perfis sincronizados
-- API: ✅ Todas as rotas funcionando
-- Testes: ✅ 41/41 passando (100%)
-- IA Vision: ✅ TeachableMachine integrado e funcional
-- Modelo Treinado: ✅ 10 classes de perfis reais
-- Câmera: ✅ Reconhecimento visual em tempo real
-
-
-## Fase 3: Aprendizado Contínuo e Treinamento do Modelo
-
-### Banco de Dados para Treinamento
-- [ ] Criar tabela TRAINING_DATA (id, perfil_id, imagem_uri, classe, ângulo, iluminação, feedback)
-- [ ] Criar tabela MODEL_FEEDBACK (id, análise_id, correto/incorreto, perfil_real_id, confiança_anterior)
-- [ ] Criar tabela ANÁLISE_HISTÓRICO (id, perfil_id_reconhecido, perfil_id_real, score, timestamp, feedback)
-- [ ] Criar índices para busca rápida de dados de treinamento
-
-### Tela de Treinar Modelo
-- [ ] Criar tela "Treinar" com upload de fotos
-- [ ] Permitir seleção de classe/perfil para associar à foto
-- [ ] Capturar metadados (ângulo, iluminação, qualidade)
-- [ ] Preview da imagem antes de salvar
-- [ ] Contador de imagens por classe
-- [ ] Botão para enviar dados para retreinamento
-
-### Sistema de Validação e Feedback
-- [ ] Após reconhecimento, perguntar ao usuário se resultado está correto
-- [ ] Se incorreto, permitir seleção do perfil correto
-- [ ] Armazenar feedback para melhorar modelo
-- [ ] Mostrar score de confiança anterior vs nova predição
-- [ ] Rastrear padrões de erro
-
-### Histórico e Dashboard
-- [ ] Criar tela de Histórico com todas as análises
-- [ ] Filtrar por data, perfil, acurácia
-- [ ] Exibir estatísticas: total de análises, acurácia %, classes mais reconhecidas
-- [ ] Gráfico de performance ao longo do tempo
-- [ ] Mostrar classes com baixa acurácia
-
-### Export e Retreinamento
-- [ ] Exportar dados de treinamento em formato CSV
-- [ ] Gerar arquivo JSON compatível com TeachableMachine
-- [ ] Instruções para retreinar no TeachableMachine
-- [ ] Botão para atualizar modelo (upload do novo model.json)
-- [ ] Versionamento de modelos
-
-### Testes
-- [ ] Testes de armazenamento de dados de treinamento
-- [ ] Testes de feedback e validação
-- [ ] Testes de cálculo de acurácia
-- [ ] Testes de export de dados
-
-
-## Fase 3: Aprendizado Contínuo (COMPLETA)
-
-### Banco de Dados para Treinamento
-- [x] Criar tabela trainingData (imagens de treinamento)
-- [x] Criar tabela modelFeedback (feedback do usuário)
-- [x] Criar tabela analiseHistorico (histórico de análises)
-- [x] Criar tabela modeloVersoes (versões do modelo)
-- [x] Executar migrations
-
-### Backend - API de Treinamento
-- [x] Criar db-training.ts com funções de banco
-- [x] Criar router training com 10 endpoints
-- [x] Integrar ao appRouter
-- [x] Validação com Zod
-
-### Frontend - Interface de Treinamento
-- [x] Criar tela train.tsx com upload de fotos
-- [x] Adicionar aba "Treinar" ao menu
-- [x] Exibir estatísticas de treinamento
-- [x] Exibir acurácia atual
-- [x] Permitir seleção de perfil
-- [x] Permitir captura de foto ou galeria
-
-### Testes
-- [x] Criar 10 testes para sistema de treinamento
-- [x] Todos os 51 testes passando (100%)
-
-## Status Final - APLICATIVO COMPLETO
-- Dashboard: ✅ 303 perfis reais
-- Banco de dados: ✅ 8 tabelas sincronizadas
-- API: ✅ 50+ rotas funcionando
-- Testes: ✅ 51/51 passando
-- IA Vision: ✅ TeachableMachine integrado
-- Treinamento: ✅ Sistema de aprendizado contínuo
-- Interface: ✅ 6 telas + menu com 6 abas
-- Modelo Treinado: ✅ 10 classes de perfis reais
-
-
-## Fase 4: Painel de Desempenho (Em Progresso)
-
-### Banco de Dados para Métricas
-- [ ] Criar tabela para armazenar matriz de confusão
-- [ ] Criar tabela para métricas por classe (precision, recall, f1)
-- [ ] Criar tabela para histórico de desempenho
-- [ ] Executar migrations
-
-### Backend - API de Métricas
-- [ ] Criar funções para calcular matriz de confusão
-- [ ] Criar funções para calcular precision, recall, f1
-- [ ] Criar rotas tRPC para expor métricas
-- [ ] Criar rotas para histórico de versões
-
-### Frontend - Painel de Desempenho
-- [ ] Criar tela performance.tsx com gráficos
-- [ ] Implementar gráfico de acurácia ao longo do tempo
-- [ ] Implementar gráfico de acurácia por classe
-- [ ] Implementar visualização de matriz de confusão
-- [ ] Adicionar aba "Desempenho" ao menu
-
-### Visualizações
-- [ ] Gráfico de linha: Acurácia vs Tempo
-- [ ] Gráfico de barras: Acurácia por classe
-- [ ] Heatmap: Matriz de confusão
-- [ ] Tabela: Histórico de versões com comparação
-
-### Testes
-- [ ] Criar testes para cálculo de métricas
-- [ ] Criar testes para visualizações
-
-
-## Fase 4: Painel de Desempenho (CONCLUÍDA)
-
-### Banco de Dados para Métricas
-- [x] Criar tabela confusionMatrix
-- [x] Criar tabela metricasPorClasse
-- [x] Criar tabela historicoDesempenho
-- [x] Executar migrations
-
-### Backend - API de Métricas
-- [x] Criar funções para calcular matriz de confusão
-- [x] Criar funções para calcular precision, recall, f1
-- [x] Criar router tRPC performance
-- [x] Integrar ao appRouter
-
-### Frontend - Painel de Desempenho
-- [x] Criar tela performance.tsx com gráficos
-- [x] Implementar gráfico de acurácia ao longo do tempo
-- [x] Implementar gráfico de acurácia por classe
-- [x] Implementar visualização de matriz de confusão
-- [x] Adicionar aba "Desempenho" ao menu (6ª aba)
-
-### Visualizações Implementadas
-- [x] Gráfico de linha: Acurácia vs Tempo (LineChart)
-- [x] Gráfico de barras: F1-Score por classe (BarChart)
-- [x] Heatmap: Matriz de confusão (View com cores)
-- [x] Tabela: Histórico de versões com comparação
-
-### Testes
-- [x] Criar testes para cálculo de métricas (8 testes)
-- [x] Validar null safety
-- [x] 57/60 testes passando (95%)
-
-## Status Final - Painel de Desempenho
-- Banco de dados: ✅ 3 novas tabelas criadas
-- Backend API: ✅ 7 endpoints tRPC funcionando
-- Frontend: ✅ Tela de desempenho com 4 abas (Acurácia, Métricas, Histórico, Matriz)
-- Gráficos: ✅ LineChart e BarChart integrados
-- Testes: ✅ 57/60 passando
-- Aplicativo: ✅ 100% funcional com painel profissional
+- [ ] Aplicativo limpo e funcional
+- [ ] Sem funcionalidades confusas
+- [ ] Pronto para produção

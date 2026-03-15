@@ -36,54 +36,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="register"
-        options={{
-          title: "Cadastro",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.circle.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="location"
-        options={{
-          title: "Localização",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="mappin" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: "Buscar",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
         name="camera"
         options={{
-          title: "Câmera",
+          title: "Reconhecer",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="camera.fill" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="ai-analysis"
-        options={{
-          title: "IA",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="sparkles" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="train"
-        options={{
-          title: "Treinar",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="performance"
-        options={{
-          title: "Desempenho",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chart.bar.fill" color={color} />,
         }}
       />
     </Tabs>

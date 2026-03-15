@@ -139,10 +139,16 @@ export const visionRecognitionRouter = router({
           `[Vision] Top 5 resultados encontrados com confidence média: ${(topResults.reduce((sum, r) => sum + r.confidence, 0) / topResults.length).toFixed(1)}%`
         );
 
+        // Retornar o melhor resultado no formato esperado pelo frontend
+        const bestResult = topResults[0];
         return {
           success: true,
-          message: "Análise concluída com sucesso",
-          results: topResults,
+          codigoPerfil: bestResult?.code || "DESCONHECIDO",
+          nomePerfil: bestResult?.name || "Perfil não identificado",
+          confidenceScore: bestResult?.confidence || 0,
+          medidas: bestResult?.measurements || { altura: 0, largura: 0, espessura: 0 },
+          localizacao: bestResult?.location || null,
+          topResults: topResults,
           metadata: {
             totalAnalyzed: allProfiles.length,
             topMatches: topResults.length,
