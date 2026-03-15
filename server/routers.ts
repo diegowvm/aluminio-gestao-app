@@ -7,6 +7,7 @@ import * as db from "./db";
 import { aiVisionRouter } from "./routers/ai-vision";
 import { visionRecognitionRouter } from "./routers/vision-recognition";
 import { trainingRouter } from "./routers/training";
+import { performanceRouter } from "./routers/performance";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -177,6 +178,9 @@ export const appRouter = router({
 
   // Training - Treinamento contínuo e feedback do modelo
   training: trainingRouter,
+
+  // Performance - Métricas e desempenho do modelo
+  performance: performanceRouter,
 });
 
 export type AppRouter = typeof appRouter;

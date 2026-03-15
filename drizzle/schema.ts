@@ -158,3 +158,57 @@ export const modeloVersoes = mysqlTable("modeloVersoes", {
 
 export type ModeloVersao = typeof modeloVersoes.$inferSelect;
 export type InsertModeloVersao = typeof modeloVersoes.$inferInsert;
+
+
+/**
+ * Tabela de Matriz de Confusão
+ * Armazena matriz de confusão para análise de erros de classificação
+ */
+export const confusionMatrix = mysqlTable("confusionMatrix", {
+  id: int().autoincrement().primaryKey(),
+  modeloVersaoId: int().notNull(),
+  perfilRealId: int().notNull(),
+  perfilPredId: int().notNull(),
+  quantidade: int().default(0).notNull(),
+  criadoEm: timestamp().defaultNow().notNull(),
+});
+
+export type ConfusionMatrix = typeof confusionMatrix.$inferSelect;
+export type InsertConfusionMatrix = typeof confusionMatrix.$inferInsert;
+
+/**
+ * Tabela de Métricas por Classe
+ * Armazena precision, recall, f1-score para cada classe
+ */
+export const metricasPorClasse = mysqlTable("metricasPorClasse", {
+  id: int().autoincrement().primaryKey(),
+  modeloVersaoId: int().notNull(),
+  perfilId: int().notNull(),
+  precision: decimal("precision", { precision: 5, scale: 2 }).default("0").notNull(),
+  recall: decimal("recall", { precision: 5, scale: 2 }).default("0").notNull(),
+  f1Score: decimal("f1Score", { precision: 5, scale: 2 }).default("0").notNull(),
+  suporte: int().default(0).notNull(),
+  criadoEm: timestamp().defaultNow().notNull(),
+});
+
+export type MetricasPorClasse = typeof metricasPorClasse.$inferSelect;
+export type InsertMetricasPorClasse = typeof metricasPorClasse.$inferInsert;
+
+/**
+ * Tabela de Histórico de Desempenho
+ * Rastreia desempenho do modelo ao longo do tempo
+ */
+export const historicoDesempenho = mysqlTable("historicoDesempenho", {
+  id: int().autoincrement().primaryKey(),
+  modeloVersaoId: int().notNull(),
+  dataAnalise: timestamp().defaultNow().notNull(),
+  acuraciaMedia: decimal("acuraciaMedia", { precision: 5, scale: 2 }).default("0").notNull(),
+  totalAnalises: int().default(0).notNull(),
+  acertos: int().default(0).notNull(),
+  erros: int().default(0).notNull(),
+  tempoMedioProcessamento: int().default(0).notNull(),
+  notas: text(),
+});
+
+export type HistoricoDesempenho = typeof historicoDesempenho.$inferSelect;
+export type InsertHistoricoDesempenho = typeof historicoDesempenho.$inferInsert;
